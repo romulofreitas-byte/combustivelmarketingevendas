@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Montserrat, Sora } from "next/font/google";
+import localFont from "next/font/local";
 import { ProtectImages } from "@/components/ProtectImages";
 import { social } from "@/data/social";
 import { brandDescription, brandName, brandTitle, company, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const sora = Sora({
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700", "800"],
+const sora = localFont({
+  src: "./fonts/sora-latin.woff2",
+  weight: "300 800",
+  display: "swap",
   variable: "--font-sora"
 });
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+const montserrat = localFont({
+  src: "./fonts/montserrat-latin.woff2",
+  weight: "300 500",
+  display: "swap",
   variable: "--font-montserrat"
 });
 
