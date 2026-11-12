@@ -18,9 +18,9 @@ export function Canal() {
       <div className="wrap">
         <p className="mono">Cadeia de venda</p>
         <h2>
-          Quem empurra.
+          A indústria vende.
           <br />
-          Quem puxa.
+          O cliente procura.
         </h2>
         <p className="lead">
           A indústria vende para o canal, e o canal vende para o cliente final. São dois movimentos diferentes, e
