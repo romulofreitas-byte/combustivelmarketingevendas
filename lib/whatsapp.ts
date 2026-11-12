@@ -1,6 +1,6 @@
 export function waMessage(_segment: string, result: string, weak: string) {
   let message =
-    "Olá, vim pelo site da Combustível. Sou de uma indústria do ramo industrial e quero agendar o bate-papo de 20 minutos.";
+    "Olá, vim pelo site da Combustível. Sou do ramo industrial e quero agendar o bate-papo de 20 minutos.";
   if (result) {
     message += ` No diagnóstico do site, o resultado foi "${result}" e a frente mais fraca é ${weak}.`;
   }
