@@ -1352,9 +1352,11 @@ footer {
   overflow: hidden;
 }
 
-.logo-marquee:hover .logo-track,
-.logo-marquee:focus-within .logo-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .logo-marquee:hover .logo-track,
+  .logo-marquee:focus-within .logo-track {
+    animation-play-state: paused;
+  }
 }
 
 .logo-track {
@@ -1417,9 +1419,11 @@ footer {
   overflow: hidden;
 }
 
-.criativos-marquee:hover .criativos-track,
-.criativos-marquee:focus-within .criativos-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .criativos-marquee:hover .criativos-track,
+  .criativos-marquee:focus-within .criativos-track {
+    animation-play-state: paused;
+  }
 }
 
 .criativos-track {
@@ -1885,6 +1889,11 @@ footer {
     padding: 4px 0 108px;
   }
 
+  .logo-marquee,
+  .criativos-marquee {
+    touch-action: pan-y;
+  }
+
   .logo-set {
     gap: 40px;
     padding-right: 40px;
@@ -1951,7 +1960,7 @@ footer {
 
   .veia {
     margin-top: 36px;
-    padding-left: 36px;
+    padding-left: 48px;
   }
 
   .veia svg {
@@ -1959,7 +1968,13 @@ footer {
   }
 
   .step {
-    padding-bottom: 44px;
+    padding-bottom: 52px;
+  }
+
+  .step ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .step h3 {

@@ -1,3 +1,4 @@
+import { FingerMarquee } from "@/components/FingerMarquee";
 import { waves } from "@/data/waves";
 import { publicImages } from "@/lib/media";
 import { Wave } from "./Wave";
@@ -21,19 +22,17 @@ export function Criativos() {
           regional e o lançamento de novos produtos.
         </p>
       </div>
-      <div className="criativos-marquee">
-        <div className="criativos-track">
-          {sets.map((set, index) => (
-            <ul key={index} className="criativos-set" aria-hidden={index === 1 ? true : undefined}>
-              {set.map((item) => (
-                <li key={`${index}-${item.src}`} tabIndex={index === 0 ? 0 : undefined}>
-                  <img src={item.src} alt={index === 0 ? item.alt : ""} />
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
-      </div>
+      <FingerMarquee className="criativos-marquee" trackClassName="criativos-track">
+        {sets.map((set, index) => (
+          <ul key={index} className="criativos-set" aria-hidden={index === 1 ? true : undefined}>
+            {set.map((item) => (
+              <li key={`${index}-${item.src}`} tabIndex={index === 0 ? 0 : undefined}>
+                <img src={item.src} alt={index === 0 ? item.alt : ""} />
+              </li>
+            ))}
+          </ul>
+        ))}
+      </FingerMarquee>
     </section>
   );
 }

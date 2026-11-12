@@ -30,13 +30,17 @@ export function Metodo() {
 
     const build = () => {
       const height = box.offsetHeight;
-      let path = "M40 0";
-      const segments = Math.max(4, Math.round(height / 160));
+      const narrow = window.matchMedia("(max-width: 860px)").matches;
+      const spine = narrow ? 14 : 40;
+      const left = narrow ? 6 : 10;
+      const right = narrow ? 26 : 70;
+      let path = `M${spine} 0`;
+      const segments = Math.max(4, Math.round(height / (narrow ? 220 : 160)));
       for (let i = 1; i <= segments; i++) {
         const y = (height * i) / segments;
         const y0 = (height * (i - 1)) / segments;
-        const sx = i % 2 ? 10 : 70;
-        path += ` C ${sx} ${y0 + (y - y0) * 0.35}, ${sx} ${y0 + (y - y0) * 0.65}, 40 ${y}`;
+        const sx = i % 2 ? left : right;
+        path += ` C ${sx} ${y0 + (y - y0) * 0.35}, ${sx} ${y0 + (y - y0) * 0.65}, ${spine} ${y}`;
       }
       base.setAttribute("d", path);
       fill.setAttribute("d", path);
