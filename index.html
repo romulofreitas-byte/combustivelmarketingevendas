@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combustível Marketing e Vendas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: dobras de atmosfera diferente, separadas por ondas orgânicas; sem caixas, só tipografia, linhas e formas. Amarelo só onde há energia. */
+:root{
+  --navy:#0B1E3F; --deep:#061229; --mid:#0F2A55; --yellow:#F5B301; --paper:#F4F1EA; --mist:#93A9CC; --blue:#7FB0FF;
+  --display:'Sora',system-ui,sans-serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --gut:clamp(20px,5vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;color-scheme:dark}
+body{background:var(--deep);color:var(--paper);font-family:var(--body);font-weight:300;font-size:18px;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px;border-radius:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.08;letter-spacing:-.02em}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+section{position:relative;padding:clamp(150px,18vw,230px) var(--gut) clamp(70px,9vw,120px);background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.wave{position:absolute;left:0;top:-119px;width:100%;height:120px;color:var(--bg);display:block;pointer-events:none;z-index:1}
+.yel{color:var(--yellow)}
+.lead{font-size:clamp(18px,1.6vw,22px);max-width:60ch;color:#D9E1EF}
+h2{font-size:clamp(34px,5.4vw,72px);font-weight:700;margin:18px 0 26px}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px var(--gut);background:linear-gradient(#061229ee,#06122900);backdrop-filter:blur(2px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;letter-spacing:.04em;font-size:15px}
+.brand small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.14em;color:var(--mist);text-transform:uppercase;margin-top:1px}
+.nav nav{display:flex;gap:26px;align-items:center;font-size:14px}
+.nav nav a{text-decoration:none;color:#C9D4E8}
+.nav nav a:hover{color:var(--yellow)}
+.pill{display:inline-block;background:var(--yellow);color:var(--navy)!important;font-weight:600;padding:9px 18px;border-radius:999px}
+@media(max-width:860px){.nav nav a:not(.pill){display:none}}
+
+/* HERO */
+#hero{--bg:var(--navy);padding-top:clamp(130px,16vw,190px);padding-bottom:140px;overflow:hidden}
+#flow{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero h1{font-size:clamp(44px,8vw,116px);font-weight:800;letter-spacing:-.035em;line-height:1}
+.strike{position:relative;display:inline-block;color:var(--mist)}
+.strike::after{content:"";position:absolute;left:-2%;top:54%;height:.09em;width:104%;background:var(--yellow);border-radius:9px;transform-origin:left;animation:slash 1s .5s cubic-bezier(.7,0,.2,1) both;transform:rotate(-2deg)}
+@keyframes slash{from{transform:rotate(-2deg) scaleX(0)}to{transform:rotate(-2deg) scaleX(1)}}
+.hero h1 em{font-style:normal;color:var(--yellow);display:block;margin-top:.12em}
+.hero .lead{margin:34px 0 40px}
+.ctas{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--yellow);color:var(--navy);font-family:var(--display);font-weight:700;font-size:16px;padding:17px 28px;border-radius:999px;text-decoration:none;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px -12px #F5B30199}
+.btn.ghost{background:none;color:var(--paper);border:1px solid #ffffff44}
+.btn.ghost:hover{border-color:var(--yellow);box-shadow:none}
+.ticker{position:absolute;left:0;right:0;bottom:30px;z-index:2;overflow:hidden;white-space:nowrap;color:var(--mist)}
+.ticker div{display:inline-block;animation:tick 40s linear infinite;padding-left:100%}
+.ticker span{margin:0 26px}
+.ticker span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-right:26px;vertical-align:middle}
+@keyframes tick{to{transform:translateX(-100%)}}
+
+/* ORDEM */
+#ordem{--bg:var(--deep)}
+.switch{display:inline-flex;border:1px solid #ffffff33;border-radius:999px;padding:5px;margin:8px 0 46px;gap:4px}
+.switch button{padding:11px 22px;border-radius:999px;font-size:14px;font-weight:500;color:var(--mist);transition:.3s}
+.switch button[aria-pressed=true]{background:var(--yellow);color:var(--navy)}
+.order{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(28px,6vw,90px);align-items:start}
+.list{position:relative;height:calc(var(--rowh)*4);--rowh:104px}
+.item{position:absolute;left:0;right:0;top:calc(var(--i)*var(--rowh));height:var(--rowh);display:flex;gap:22px;align-items:flex-start;border-top:1px solid #ffffff22;padding-top:16px;transition:top .8s cubic-bezier(.7,0,.2,1)}
+.item b{font-family:var(--display);font-size:38px;font-weight:300;color:var(--mist);min-width:44px;transition:color .6s}
+.item h3{font-size:clamp(19px,2.2vw,26px);font-weight:600}
+.item p{font-size:15px;color:var(--mist);margin-top:3px}
+.item.mk h3{color:var(--yellow)}
+.order[data-mode=b] .item b{color:var(--yellow)}
+.verdict{border-left:2px solid var(--yellow);padding-left:24px;min-height:150px}
+.verdict p{font-family:var(--display);font-size:clamp(20px,2.3vw,28px);font-weight:400;line-height:1.3}
+.big-quote{margin-top:90px;font-family:var(--display);font-weight:800;font-size:clamp(30px,6vw,84px);letter-spacing:-.03em;line-height:1.02}
+.big-quote span{color:var(--yellow)}
+@media(max-width:860px){.order{grid-template-columns:1fr}.list{--rowh:118px}}
+
+/* CANAL */
+#canal{--bg:var(--mid)}
+.modes{display:flex;flex-wrap:wrap;gap:10px 28px;margin:16px 0 20px}
+.modes button{font-family:var(--display);font-weight:600;font-size:15px;color:var(--mist);padding:6px 0;border-bottom:2px solid transparent;transition:.3s}
+.modes button[aria-pressed=true]{color:var(--paper);border-color:var(--yellow)}
+#chain{width:100%;height:auto;display:block;overflow:visible}
+#chain text{font-family:var(--display);fill:var(--paper)}
+.chaintxt{min-height:96px;max-width:62ch;font-size:19px;color:#E0E7F3}
+.field{margin-top:54px;display:grid;grid-template-columns:auto 1fr;gap:24px 40px;align-items:start;border-top:1px solid #ffffff22;padding-top:34px}
+.field p{max-width:66ch;color:#D3DCEC}
+.trio{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:14px;font-family:var(--display);font-weight:600;color:var(--yellow)}
+@media(max-width:760px){.field{grid-template-columns:1fr}}
+
+/* MAPA */
+#mapa{--bg:#081832}
+.mapgrid{display:grid;grid-template-columns:minmax(280px,560px) 1fr;gap:clamp(28px,6vw,90px);align-items:center}
+#brmap{width:100%;aspect-ratio:1/1;display:block;cursor:pointer;touch-action:manipulation}
+.lens{display:flex;gap:10px;margin:6px 0 26px}
+.lens button{padding:10px 20px;border:1px solid #ffffff33;border-radius:999px;font-size:14px;transition:.3s}
+.lens button[aria-pressed=true]{background:var(--paper);color:var(--navy);border-color:var(--paper)}
+.read h3{font-size:clamp(26px,3.4vw,44px);font-weight:700}
+.levels{display:flex;gap:24px;margin:14px 0 16px;flex-wrap:wrap}
+.levels span{font-size:15px;color:var(--mist)}
+.levels b{color:var(--paper);font-weight:500}
+.read p.r{font-size:19px;max-width:48ch;min-height:84px}
+.note{font-size:13px;color:var(--mist);margin-top:18px;max-width:52ch}
+.pin{margin-top:22px;font-size:15px;color:#D3DCEC;max-width:52ch}
+.pin::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--blue);margin-right:10px;box-shadow:0 0 0 5px #7FB0FF33}
+@media(max-width:860px){.mapgrid{grid-template-columns:1fr}}
+
+/* MÉTODO */
+#metodo{--bg:var(--navy)}
+.veia{position:relative;margin-top:60px;padding-left:clamp(56px,9vw,120px)}
+.veia svg{position:absolute;left:0;top:0;width:90px;height:100%;overflow:visible}
+.step{position:relative;padding:0 0 clamp(60px,8vw,110px);max-width:760px}
+.step:last-child{padding-bottom:0}
+.step .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--mist);transition:color .5s}
+.step.on .num{color:var(--yellow)}
+.step h3{font-size:clamp(28px,4.2vw,54px);font-weight:700;margin:8px 0 14px;color:#9FB0CC;transition:color .5s}
+.step.on h3{color:var(--paper)}
+.step p{font-size:19px;color:#D3DCEC;max-width:56ch}
+.step ul{list-style:none;margin-top:18px;display:flex;flex-wrap:wrap;gap:8px 22px;font-size:15px;color:var(--mist)}
+.step li::before{content:"→ ";color:var(--yellow)}
+.step.last h3 small{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);background:var(--yellow);padding:3px 10px;border-radius:999px;vertical-align:middle;margin-left:12px;font-weight:500}
+.proof{margin-top:90px;border-top:1px solid #ffffff22;padding-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:30px 60px}
+.proof p{font-size:17px;color:#D3DCEC;max-width:52ch}
+@media(max-width:760px){.proof{grid-template-columns:1fr}}
+
+/* INDÚSTRIAS */
+#ind{--bg:var(--mid)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 44px}
+.chips button{padding:10px 20px;border:1px solid #ffffff3a;border-radius:999px;font-size:15px;transition:.25s}
+.chips button:hover{border-color:var(--yellow)}
+.chips button[aria-pressed=true]{background:var(--yellow);color:var(--navy);border-color:var(--yellow);font-weight:500}
+.seg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px 48px}
+.seg div{border-top:1px solid #ffffff33;padding-top:16px}
+.seg h4{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px}
+.seg p{font-size:17px;color:#E0E7F3}
+.seg-h{font-family:var(--display);font-size:clamp(22px,2.8vw,34px);font-weight:600;max-width:30ch;margin-bottom:30px;min-height:2.3em}
+@media(max-width:860px){.seg{grid-template-columns:1fr}}
+
+/* QUIZ */
+#diag{--bg:var(--deep)}
+.quiz{max-width:860px;margin-top:30px}
+.qprog{height:3px;background:#ffffff22;border-radius:3px;overflow:hidden;margin-bottom:34px}
+.qprog i{display:block;height:100%;width:0;background:var(--yellow);transition:width .5s}
+.q h3{font-size:clamp(24px,3.4vw,40px);font-weight:600;margin-bottom:26px}
+.opts{display:flex;flex-direction:column}
+.opts button{text-align:left;padding:20px 4px;border-top:1px solid #ffffff2a;font-size:19px;display:flex;gap:18px;align-items:baseline;transition:.25s}
+.opts button:last-child{border-bottom:1px solid #ffffff2a}
+.opts button:hover{padding-left:18px;color:var(--yellow)}
+.opts em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--mist)}
+.result h3{font-size:clamp(34px,5.4vw,70px);font-weight:800;color:var(--yellow);margin:8px 0 14px}
+.bars{margin:30px 0;display:grid;gap:16px;max-width:620px}
+.bar{display:grid;grid-template-columns:200px 1fr;align-items:center;gap:16px;font-size:15px}
+.bar span{color:var(--mist)}
+.bar i{display:block;height:8px;border-radius:8px;background:#ffffff1f;position:relative;overflow:hidden}
+.bar i b{position:absolute;inset:0 auto 0 0;background:var(--mist);border-radius:8px;transition:width 1s .2s}
+.bar.weak span{color:var(--yellow)}
+.bar.weak i b{background:var(--yellow)}
+.again{margin-left:8px;color:var(--mist);text-decoration:underline;font-size:15px}
+@media(max-width:560px){.bar{grid-template-columns:1fr}}
+
+/* CONVERSA */
+#conversa{--bg:var(--navy)}
+.talk{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,7vw,110px)}
+.steps3{list-style:none;counter-reset:s}
+.steps3 li{counter-increment:s;border-top:1px solid #ffffff2a;padding:22px 0 22px 64px;position:relative}
+.steps3 li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:20px;font-family:var(--display);font-size:32px;font-weight:300;color:var(--yellow)}
+.steps3 h3{font-size:22px;font-weight:600}
+.steps3 p{font-size:16px;color:var(--mist);margin-top:4px}
+.obj button{display:block;width:100%;text-align:left;padding:22px 40px 22px 0;border-top:1px solid #ffffff2a;font-family:var(--display);font-size:clamp(18px,2vw,23px);font-weight:600;position:relative}
+.obj button::after{content:"+";position:absolute;right:6px;top:20px;color:var(--yellow);font-size:26px;transition:transform .3s}
+.obj button[aria-expanded=true]::after{transform:rotate(45deg)}
+.obj .ans{max-height:0;overflow:hidden;transition:max-height .5s;color:#D3DCEC;font-size:17px}
+.obj .ans p{padding:0 0 22px;max-width:50ch}
+.obj{border-bottom:1px solid #ffffff2a}
+@media(max-width:860px){.talk{grid-template-columns:1fr}}
+
+/* CTA */
+#cta{--bg:var(--yellow);color:var(--navy);padding-bottom:60px;overflow:hidden}
+#cta h2{font-size:clamp(40px,8vw,118px);font-weight:800;letter-spacing:-.035em;line-height:.98;max-width:14ch}
+#cta .lead{color:#1b2c4d;margin:10px 0 36px}
+#cta .btn{background:var(--navy);color:var(--paper)}
+#cta .btn:hover{box-shadow:0 14px 40px -12px #0B1E3F99}
+#cta .mono{color:#4a4120}
+.blob{position:absolute;right:-8vw;top:20%;width:46vw;height:46vw;max-width:640px;max-height:640px;background:#ffcd45;border-radius:42% 58% 63% 37%/41% 44% 56% 59%;animation:morph 14s ease-in-out infinite;z-index:1}
+@keyframes morph{50%{border-radius:60% 40% 38% 62%/58% 56% 44% 42%;transform:rotate(18deg)}}
+.wanote{font-size:13px;margin-top:16px;color:#4a4120;max-width:52ch}
+footer{margin-top:110px;border-top:1px solid #0B1E3F33;padding-top:22px;display:flex;flex-wrap:wrap;gap:12px 40px;justify-content:space-between;font-size:13px;color:#1b2c4d;position:relative;z-index:2}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.strike::after{transform:rotate(-2deg)}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="#hero" aria-label="Combustível Marketing e Vendas">
+    <svg width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><path d="M11 1C11 8 3 11 3 18a8 8 0 0016 0c0-4-2-6-3.500-8-.5 2-1.500 3-3 3 1-4 .5-8-1.500-12z" fill="#F5B301"/></svg>
+    <span>COMBUSTÍVEL<small>Marketing e Vendas · Mundo Pódium</small></span>
+  </a>
+  <nav>
+    <a href="#ordem">A ordem</a><a href="#canal">Canal</a><a href="#mapa">Região</a><a href="#metodo">Método</a><a href="#diag">Diagnóstico</a>
+    <a class="pill wa" href="#cta">Bate-papo de 20 min</a>
+  </nav>
+</header>
+
+<!-- 1. HERO -->
+<section id="hero" class="hero">
+  <canvas id="flow" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="mono">Assessoria comercial para indústrias</p>
+    <h1 style="margin-top:22px">Não somos uma agência de <span class="strike">marketing</span>.<em>Somos o comercial da indústria.</em></h1>
+    <p class="lead">Mercado, canal, prospecção ativa e reunião marcada com o decisor. O marketing entra por último, como ferramenta, para fazer o comercial render mais.</p>
+    <div class="ctas">
+      <a class="btn wa" href="#cta">Agendar bate-papo de 20 min <span aria-hidden="true">→</span></a>
+      <a class="btn ghost" href="#diag">Fazer o diagnóstico</a>
+    </div>
+  </div>
+  <div class="ticker mono" aria-hidden="true"><div>
+    <span>Química</span><span>Alimentícia</span><span>Construção civil</span><span>Mineração</span><span>Metalurgia</span><span>Tratamento de água</span><span>Têxtil</span><span>Papel e celulose</span><span>Frigoríficos</span><span>Qualquer ramo industrial que venda para outra empresa</span>
+  </div></div>
+</section>
+
+<!-- 2. ORDEM -->
+<section id="ordem">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 120V70C180 20 320 110 520 70S860 0 1060 50 1330 90 1440 40V120Z"/></svg>
+  <div class="wrap">
+    <p class="mono">O equívoco mais comum</p>
+    <h2>A ordem muda o resultado.</h2>
+    <p class="lead">Quando a indústria contrata marketing primeiro, ela recebe visibilidade e continua sem saber para quem vender. Mude a chave e veja a mesma lista na ordem em que a Combustível trabalha.</p>
+    <div class="switch" role="group" aria-label="Ordem de trabalho">
+      <button id="swA" aria-pressed="true">Como a maioria contrata</button>
+      <button id="swB" aria-pressed="false">Como a Combustível trabalha</button>
+    </div>
+    <div class="order" id="order" data-mode="a">
+      <div class="list" id="olist"></div>
+      <div class="verdict" aria-live="polite"><p id="overdict"></p></div>
+    </div>
+    <p class="big-quote">Marketing é <span>ferramenta</span>,<br>não solução.</p>
+  </div>
+</section>
+
+<!-- 3. CANAL -->
+<section id="canal">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 60C240 130 420 0 720 50S1200 120 1440 30V120H0Z"/></svg>
+  <div class="wrap">
+    <p class="mono">Cadeia de venda</p>
+    <h2>Quem empurra.<br>Quem puxa.</h2>
+    <p class="lead">A indústria vende para o canal, e o canal vende para o cliente final. São dois movimentos diferentes, e cada um pede uma ação diferente.</p>
+    <div class="modes" role="group" aria-label="Movimento">
+      <button data-m="in" aria-pressed="true">Sell-in: a fábrica empurra</button>
+      <button data-m="out" aria-pressed="false">Sell-out: o cliente puxa</button>
+      <button data-m="both" aria-pressed="false">Uma ação, dois efeitos</button>
+    </div>
+    <svg id="chain" viewBox="0 0 1000 320" role="img" aria-label="Fábrica, representante ou distribuidor e cliente final ligados por uma linha com pontos em movimento">
+      <path id="cpath" d="M70 200C230 60 340 60 500 180S790 300 930 130" fill="none" stroke="#ffffff2e" stroke-width="2"/>
+      <g id="cdots"></g>
+      <g id="region" opacity="0" style="transition:opacity .6s">
+        <circle cx="500" cy="62" r="46" fill="#F5B30122" stroke="#F5B301" stroke-dasharray="3 6"/>
+        <text x="500" y="58" text-anchor="middle" font-size="14" font-weight="600" fill="#F5B301" style="fill:#F5B301">Marca na região</text>
+        <text x="500" y="76" text-anchor="middle" font-size="11" style="fill:#93A9CC">tráfego regional</text>
+      </g>
+      <g font-size="17" font-weight="600">
+        <circle cx="70" cy="200" r="13" fill="#F5B301"/><text x="70" y="248" text-anchor="middle">Fábrica</text>
+        <circle cx="500" cy="180" r="13" fill="#F4F1EA"/><text x="500" y="228" text-anchor="middle">Representante ou distribuidor</text>
+        <circle cx="930" cy="130" r="13" fill="#7FB0FF"/><text x="930" y="178" text-anchor="middle">Cliente final</text>
+      </g>
+    </svg>
+    <p class="chaintxt" id="chaintxt" aria-live="polite"></p>
+    <div class="field">
+      <span class="mono">Do campo</span>
+      <div>
+        <p>Em treinamento com representantes de uma indústria de alimentos, as objeções se repetiram em três. Marca presente na região responde às três antes de o representante precisar argumentar.</p>
+        <div class="trio"><span>Falta de confiança na marca</span><span>Concorrência por espaço</span><span>Baixa demanda</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. MAPA -->
+<section id="mapa">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 90C160 20 360 20 560 70S980 130 1180 60 1380 40 1440 70V120H0Z"/></svg>
+  <div class="wrap">
+    <p class="mono">Olhar macro por região</p>
+    <h2>Cada região é um mercado diferente.</h2>
+    <p class="lead">O painel de anúncios mostra onde há procura. As vendas mostram onde a indústria entrega. Cruzar os dois vira base de dados comercial. Toque em uma região.</p>
+    <div class="mapgrid">
+      <canvas id="brmap" aria-label="Mapa ilustrativo do Brasil por regiões"></canvas>
+      <div class="read" aria-live="polite">
+        <div class="lens" role="group" aria-label="Lente do mapa">
+          <button data-l="v" aria-pressed="true">Onde vende</button>
+          <button data-l="p" aria-pressed="false">Onde procuram</button>
+        </div>
+        <h3 id="rname">Sudeste</h3>
+        <div class="levels"><span>Vende: <b id="rv"></b></span><span>Procura: <b id="rp"></b></span></div>
+        <p class="r" id="rread"></p>
+        <p class="pin">Caso real, sem nome: uma indústria viu muito acesso vindo de Passos/MG, onde não vendia, e abriu ali uma frente nova de vendas. Procure o ponto azul no mapa.</p>
+        <p class="note">Mapa ilustrativo. Os níveis mostrados são exemplos para explicar a leitura, não dados de cliente. Os dados reais saem do painel de anúncios e das vendas de cada indústria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. MÉTODO -->
+<section id="metodo">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 40C200 110 380 110 620 60S1040 -10 1240 50 1400 90 1440 70V120H0Z"/></svg>
+  <div class="wrap">
+    <p class="mono">Como a Combustível trabalha</p>
+    <h2>Quatro frentes, nesta ordem.</h2>
+    <p class="lead">Cada frente prepara a seguinte. Pular uma é o que faz o dinheiro de marketing escorrer sem virar reunião.</p>
+    <div class="veia" id="veia">
+      <svg id="vsvg" aria-hidden="true"><path id="vbase" fill="none" stroke="#ffffff22" stroke-width="3"/><path id="vfill" fill="none" stroke="#F5B301" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="step"><span class="num">FRENTE 1</span><h3>Inteligência de mercado</h3><p>Antes de ligar ou anunciar, entender mercado, concorrência e região. Onde a indústria vende, onde não vende e onde existe procura sem atendimento.</p><ul><li>Estudo de mercado e concorrência</li><li>Leitura por região</li><li>Mapa de empresas e decisores</li></ul></div>
+      <div class="step"><span class="num">FRENTE 2</span><h3>Estratégia comercial</h3><p>Desenhar a cadeia de venda: fábrica, representante, distribuidor, revenda ou licitação. O que cada elo precisa ouvir, e como a marca responde às objeções do representante.</p><ul><li>Desenho de canal</li><li>Sell-in e sell-out por região</li><li>Argumentos para o representante</li></ul></div>
+      <div class="step"><span class="num">FRENTE 3</span><h3>Prospecção ativa</h3><p>Ligação para o sócio-administrador, passando pelo gatekeeper, com follow-up por telefone e reunião qualificada na agenda da indústria.</p><ul><li>Lista qualificada de empresas e decisores</li><li>Cold call</li><li>Reuniões agendadas</li></ul></div>
+      <div class="step last"><span class="num">FRENTE 4</span><h3>Marketing como ferramenta <small>por último</small></h3><p>Tráfego pago regionalizado, site e marca entram para sustentar o comercial. O cliente final procura, o representante fecha, e ninguém precisa abrir porta fria.</p><ul><li>Campanhas por região</li><li>Painel de cliques como dado comercial</li><li>Site e identidade</li></ul></div>
+    </div>
+    <div class="proof">
+      <p>O método de prospecção vem de ligar ao vivo. O canal do Mundo Pódium tem mais de 170 lives e mais de 400 horas de ligação real transmitida, com cliente de verdade do outro lado.</p>
+      <p>Toda hipótese que ainda não virou dado fica rotulada como hipótese. Nada vai para a mesa do dono da indústria como fato antes de ser validado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. INDÚSTRIAS -->
+<section id="ind">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 70C220 0 420 130 700 70S1160 -10 1440 60V120H0Z"/></svg>
+  <div class="wrap">
+    <p class="mono">Qualquer ramo industrial</p>
+    <h2>Escolha o seu ramo.</h2>
+    <div class="chips" id="chips" role="group" aria-label="Ramo da indústria"></div>
+    <p class="seg-h" id="segh"></p>
+    <div class="seg" id="seg"></div>
+    <p class="note" style="color:var(--mist);font-size:13px;margin-top:30px;max-width:60ch">Leitura inicial de como o comercial costuma funcionar em cada ramo. Tudo isso é hipótese a validar no diagnóstico com a sua indústria.</p>
+  </div>
+</section>
+
+<!-- 7. DIAGNÓSTICO -->
+<section id="diag">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 30C260 120 480 -10 760 50S1220 110 1440 20V120H0Z"/></svg>
+  <div class="wrap">
+    <p class="mono">Diagnóstico em 2 minutos</p>
+    <h2>Seu comercial tem desenho<br>ou tem sorte?</h2>
+    <div class="quiz" id="quiz"></div>
+  </div>
+</section>
+
+<!-- 8. CONVERSA -->
+<section id="conversa">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 80C180 10 400 20 640 70S1100 120 1440 30V120H0Z"/></svg>
+  <div class="wrap talk">
+    <div>
+      <p class="mono">Como começa</p>
+      <h2>Vinte minutos,<br>sem proposta.</h2>
+      <ol class="steps3">
+        <li><h3>Bate-papo de 20 minutos</h3><p>Conversa sobre concorrente, mercado e região, no momento do planejamento estratégico do próximo ano.</p></li>
+        <li><h3>Diagnóstico</h3><p>Perguntas sobre situação, problema, impacto e necessidade. Estudo de mercado e o método aplicado ao seu caso.</p></li>
+        <li><h3>Plano de ação</h3><p>Cada parte da solução amarrada a uma dor que você mesmo confirmou na conversa.</p></li>
+      </ol>
+    </div>
+    <div>
+      <p class="mono">Objeções que a gente escuta</p>
+      <div class="obj" id="obj" style="margin-top:26px">
+        <button aria-expanded="false">“A gente não vende para o consumidor final.”</button>
+        <div class="ans"><p>É exatamente esse o trabalho. Vender para indústria, distribuidor e revenda pede sell-in e sell-out regionais, e não campanha de varejo.</p></div>
+        <button aria-expanded="false">“Já temos agência de marketing.”</button>
+        <div class="ans"><p>Ótimo, quer dizer que a marca já é cuidada. A Combustível entra no comercial: quem compra, em qual região e quem liga para fechar a reunião. Os dois lados se completam.</p></div>
+        <button aria-expanded="false">“Nossa venda é por representantes.”</button>
+        <div class="ans"><p>Então o representante é o elo mais importante da cadeia. A estratégia dá a ele marca presente na região e conversa já aberta, para que ele não comece pela porta fria.</p></div>
+        <button aria-expanded="false">“Já vendemos bem, sem estratégia.”</button>
+        <div class="ans"><p>Vender bem sem desenho costuma ser carteira antiga e relacionamento. Funciona até o dia em que o cliente muda. O desenho protege o que já existe e mostra onde há mais.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. CTA -->
+<section id="cta">
+  <svg class="wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 100C200 30 360 10 600 50S1080 120 1440 20V120H0Z"/></svg>
+  <div class="blob" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="mono">Próximo passo</p>
+    <h2 style="margin-top:18px">Vamos falar do seu mercado.</h2>
+    <p class="lead">Vinte minutos sobre concorrente, região e o planejamento do próximo ano da sua indústria.</p>
+    <a class="btn wa" id="waMain" href="#cta">Chamar no WhatsApp <span aria-hidden="true">→</span></a>
+    <p class="wanote" id="wanote"></p>
+    <footer>
+      <span>Combustível Marketing e Vendas · uma vertente do Mundo Pódium</span>
+      <span>Mundo Pódium LTDA · CNPJ 68.349.974/0001-19 · Belo Horizonte, MG</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+/* ===== CONFIG ===== */
+const WA_NUMBER = ""; // somente dígitos com DDI e DDD, ex.: 5531999999999
+const state = {segment:"", result:"", weak:""};
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ===== WhatsApp ===== */
+function waMessage(){
+  let m = "Olá, vim pelo site da Combustível. Sou de uma indústria"+(state.segment?" do ramo "+state.segment.toLowerCase():"")+" e quero agendar o bate-papo de 20 minutos.";
+  if(state.result) m += " No diagnóstico do site, o resultado foi \""+state.result+"\" e a frente mais fraca é "+state.weak+".";
+  return m;
+}
+function refreshWA(){
+  const msg = waMessage();
+  const note = document.getElementById('wanote');
+  document.querySelectorAll('a.wa').forEach(a=>{
+    if(a.id==='waMain'||a.closest('.nav')===null&&false){}
+  });
+  const main = document.getElementById('waMain');
+  if(WA_NUMBER){ main.href = "https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg); main.target="_blank"; main.rel="noopener"; note.textContent="A conversa abre com esta mensagem pronta: “"+msg+"”"; }
+  else { main.href="#cta"; note.textContent="Número do WhatsApp ainda não configurado. Mensagem que será enviada: “"+msg+"”"; }
+}
+document.getElementById('waMain').addEventListener('click',e=>{
+  if(!WA_NUMBER){ e.preventDefault(); try{navigator.clipboard.writeText(waMessage())}catch(_){ } }
+});
+
+/* ===== HERO: campo de fluxo ===== */
+(function(){
+  const c = document.getElementById('flow'), x = c.getContext('2d');
+  let w,h,dpr,ps=[],mx=-999,my=-999,t=0;
+  function size(){ dpr=Math.min(devicePixelRatio||1,2); w=c.clientWidth; h=c.clientHeight; c.width=w*dpr; c.height=h*dpr; x.setTransform(dpr,0,0,dpr,0,0); x.fillStyle='#0B1E3F'; x.fillRect(0,0,w,h);
+    ps=[]; const n=Math.round(w*h/9000); for(let i=0;i<n;i++) ps.push({x:Math.random()*w,y:Math.random()*h,a:Math.random()<.14}); }
+  function ang(px,py){ return Math.sin(px*.0032+t)*1.6+Math.cos(py*.0041-t*.8)*1.6+ (px/w)*1.2; }
+  function frame(){
+    t+=.0022;
+    x.fillStyle='rgba(11,30,63,.07)'; x.fillRect(0,0,w,h);
+    for(const p of ps){
+      let a=ang(p.x,p.y); const dx=p.x-mx, dy=p.y-my, d=Math.hypot(dx,dy);
+      let vx=Math.cos(a)*1.1, vy=Math.sin(a)*1.1;
+      if(d<150){ const f=(150-d)/150; vx+=dx/d*f*3; vy+=dy/d*f*3; }
+      x.strokeStyle=p.a?'rgba(245,179,1,.75)':'rgba(147,169,204,.35)'; x.lineWidth=p.a?1.4:1;
+      x.beginPath(); x.moveTo(p.x,p.y); p.x+=vx; p.y+=vy; x.lineTo(p.x,p.y); x.stroke();
+      if(p.x<0||p.x>w||p.y<0||p.y>h){ p.x=Math.random()*w; p.y=Math.random()*h; }
+    }
+    if(!reduce) requestAnimationFrame(frame);
+  }
+  size(); addEventListener('resize',size);
+  c.parentElement.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(); mx=e.clientX-r.left; my=e.clientY-r.top;});
+  c.parentElement.addEventListener('pointerleave',()=>{mx=my=-999});
+  if(reduce){ for(let i=0;i<260;i++){ frame(); t+=.001; } } else frame();
+})();
+
+/* ===== ORDEM: lista reordenável ===== */
+(function(){
+  const data = {
+    mercado:{n:"Inteligência de mercado",a:"Quase nunca acontece.",b:"Onde a indústria vende, onde não vende, quem concorre."},
+    estrategia:{n:"Estratégia comercial",a:"Se sobrar tempo.",b:"Canal, representante, região e o que cada elo precisa ouvir."},
+    prospeccao:{n:"Prospecção ativa",a:"Esperar o lead aparecer.",b:"Ligar para o decisor certo e marcar reunião."},
+    marketing:{n:"Marketing",a:"Post, site e anúncio no lugar de estratégia.",b:"Ferramenta que amplifica o que o comercial já definiu."}
+  };
+  const A=["marketing","prospeccao","estrategia","mercado"], B=["mercado","estrategia","prospeccao","marketing"];
+  const list=document.getElementById('olist'), box=document.getElementById('order'), vd=document.getElementById('overdict');
+  const els={};
+  Object.keys(data).forEach(k=>{ const d=document.createElement('div'); d.className='item'+(k==='marketing'?' mk':''); d.innerHTML='<b></b><div><h3>'+data[k].n+'</h3><p></p></div>'; list.appendChild(d); els[k]=d; });
+  function set(mode){
+    const ord = mode==='a'?A:B; box.dataset.mode=mode;
+    ord.forEach((k,i)=>{ els[k].style.setProperty('--i',i); els[k].querySelector('b').textContent=i+1; els[k].querySelector('p').textContent=data[k][mode]; });
+    vd.textContent = mode==='a' ? "Resultado: visita, curtida e uma equipe de vendas sem saber o que fazer com isso." : "Resultado: reunião marcada com o decisor, na região que a estratégia escolheu.";
+    document.getElementById('swA').setAttribute('aria-pressed',mode==='a'); document.getElementById('swB').setAttribute('aria-pressed',mode==='b');
+  }
+  document.getElementById('swA').onclick=()=>set('a'); document.getElementById('swB').onclick=()=>set('b');
+  set('a');
+})();
+
+/* ===== CANAL: pontos em movimento ===== */
+(function(){
+  const path=document.getElementById('cpath'), g=document.getElementById('cdots'), L=path.getTotalLength(), N=18, ns='http://www.w3.org/2000/svg';
+  const dots=[]; for(let i=0;i<N;i++){ const c=document.createElementNS(ns,'circle'); c.setAttribute('r',5); g.appendChild(c); dots.push(c); }
+  let mode='in', t=0;
+  const txt={
+    in:"Sell-in: a indústria vende para o canal. O trabalho é abrir distribuidores, revendas e representantes com prospecção ativa e reunião marcada. Quem empurra precisa saber exatamente para quem.",
+    out:"Sell-out: o canal vende para o cliente final. Se ninguém procura a marca na região, o produto fica na prateleira do distribuidor. Quem puxa cria a demanda que faz o canal comprar de novo.",
+    both:"Tráfego pago regionalizado: uma ação, dois efeitos. O cliente final conhece a marca e procura. O representante fecha, e deixa de abrir porta fria. A ação mira só onde a estratégia comercial mandou."
+  };
+  function set(m){ mode=m; document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===m)); document.getElementById('chaintxt').textContent=txt[m]; document.getElementById('region').setAttribute('opacity',m==='both'?1:0);
+    dots.forEach((d,i)=>{ const back = m==='out' || (m==='both' && i%2); d.setAttribute('fill', back?'#7FB0FF':'#F5B301'); d._back=back; }); }
+  document.querySelectorAll('.modes button').forEach(b=>b.onclick=()=>set(b.dataset.m));
+  function draw(){ t+=.0016; dots.forEach((d,i)=>{ let u=((i/N)+t)%1; if(d._back) u=1-u; const p=path.getPointAtLength(u*L); d.setAttribute('cx',p.x); d.setAttribute('cy',p.y); d.setAttribute('opacity', .35+.65*Math.sin(u*Math.PI)); }); if(!reduce) requestAnimationFrame(draw); }
+  set('in'); draw();
+})();
+
+/* ===== MAPA ===== */
+(function(){
+  const poly=[[-51,4],[-50,1.5],[-48.5,-.5],[-44.5,-2.2],[-40,-2.8],[-37,-4.8],[-34.9,-6.5],[-35.2,-9],[-37.2,-11.2],[-38.8,-13.5],[-39.1,-17.5],[-40,-20.3],[-41.5,-22.5],[-44,-23.2],[-46.5,-24.3],[-48.5,-26],[-48.8,-28.5],[-50.5,-30.5],[-53.4,-33.7],[-53.5,-33],[-57.6,-30.2],[-56,-28.2],[-54,-27],[-53.8,-25.5],[-54.6,-24],[-55.5,-22],[-57.6,-22],[-58.2,-20],[-57.8,-17.5],[-60.2,-16.2],[-61.5,-14],[-65,-11.5],[-68,-10.8],[-70.5,-11],[-73.5,-9],[-72.8,-7.5],[-70,-4.2],[-69.8,-1],[-70,1],[-67.5,2],[-66.8,1.2],[-64,1.8],[-62.5,3.8],[-60,5.2],[-57,2.5],[-54,2.3]];
+  function inside(lo,la){ let r=false; for(let i=0,j=poly.length-1;i<poly.length;j=i++){ const [xi,yi]=poly[i],[xj,yj]=poly[j]; if(((yi>la)!==(yj>la)) && lo<(xj-xi)*(la-yi)/(yj-yi)+xi) r=!r; } return r; }
+  function region(lo,la){
+    if(la<-25.5||(la<-23.5&&lo<-49&&lo>-58)) return 'Sul';
+    if(la<-18&&la>=-25.5&&lo>-53.5) return 'Sudeste';
+    if((la>-18&&lo>-46.5)||(la>-10&&lo>-47.5)) return 'Nordeste';
+    if(lo>-61.5&&lo<-46&&la<-10&&la>-24) return 'Centro-Oeste';
+    return 'Norte';
+  }
+  const lv={ 'Sul':[2,1],'Sudeste':[2,2],'Nordeste':[0,2],'Centro-Oeste':[1,1],'Norte':[0,0] }; // [vende, procura] ilustrativo
+  const words=['baixo','médio','alto'];
+  function reading(v,p){
+    if(v>=2&&p>=2) return "Mantém. A marca vende onde é procurada. Proteger o canal e acompanhar o concorrente de perto.";
+    if(v<=0&&p>=2) return "Procura sem atendimento. Abrir frente nova: representante ou distribuidor na região, com prospecção ativa.";
+    if(v>=2&&p<=1) return "Vende pela carteira que já existe. Descobrir se é relacionamento antigo ou se há espaço para crescer.";
+    if(v<=0&&p<=0) return "Mercado frio. Decidir com dado se vale ação regional agora ou se a região não é prioridade.";
+    return "Meio-termo. Ação regional guiada pela estratégia comercial, sem espalhar verba.";
+  }
+  const cv=document.getElementById('brmap'), cx=cv.getContext('2d');
+  const dots=[]; const step=.72;
+  for(let lo=-74;lo<-34;lo+=step) for(let la=5.3;la>-34;la-=step){ if(inside(lo,la)) dots.push({lo,la,r:region(lo,la),n:Math.random()}); }
+  const PASSOS={lo:-46.6,la:-20.7};
+  let lens='v', sel='Sudeste', hover=null, W, tt=0;
+  function size(){ const d=Math.min(devicePixelRatio||1,2); W=cv.clientWidth; cv.width=W*d; cv.height=W*d; cx.setTransform(d,0,0,d,0,0); }
+  const px=lo=>(lo+74)/40*W, py=la=>(5.8-la)/40*W;
+  function draw(){
+    tt+=.03; cx.clearRect(0,0,W,W);
+    for(const d of dots){
+      const [v,p]=lv[d.r], lvl=lens==='v'?v:p;
+      let a=[.16,.5,1][lvl], rad=W/110*(d.r===sel?1.25:1);
+      if(d.r===hover) a=Math.min(1,a+.25);
+      if(d.r===sel&&lvl===0) a=.3;
+      cx.fillStyle = lens==='v' ? `rgba(245,179,1,${a})` : `rgba(127,176,255,${a})`;
+      cx.beginPath(); cx.arc(px(d.lo),py(d.la),rad,0,6.283); cx.fill();
+    }
+    // Passos/MG
+    const X=px(PASSOS.lo), Y=py(PASSOS.la), pulse=(Math.sin(tt)+1)/2;
+    cx.strokeStyle=`rgba(127,176,255,${lens==='p'?.9:.5})`; cx.lineWidth=2;
+    cx.beginPath(); cx.arc(X,Y,W/80+pulse*W/30,0,6.283); cx.stroke();
+    cx.fillStyle='#7FB0FF'; cx.beginPath(); cx.arc(X,Y,W/110*1.6,0,6.283); cx.fill();
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  function at(e){ const r=cv.getBoundingClientRect(), q=(e.clientX-r.left)/r.width*W, z=(e.clientY-r.top)/r.height*W; const lo=q/W*40-74, la=5.8-z/W*40; return inside(lo,la)?region(lo,la):null; }
+  function info(){ const [v,p]=lv[sel]; document.getElementById('rname').textContent=sel; document.getElementById('rv').textContent=words[v]; document.getElementById('rp').textContent=words[p]; document.getElementById('rread').textContent=reading(v,p); }
+  cv.addEventListener('pointermove',e=>{hover=at(e)}); cv.addEventListener('pointerleave',()=>hover=null);
+  cv.addEventListener('click',e=>{ const r=at(e); if(r){sel=r; info(); if(reduce) draw();} });
+  document.querySelectorAll('.lens button').forEach(b=>b.onclick=()=>{ lens=b.dataset.l; document.querySelectorAll('.lens button').forEach(x=>x.setAttribute('aria-pressed',x===b)); if(reduce) draw(); });
+  size(); addEventListener('resize',()=>{size(); if(reduce) draw();}); info(); draw();
+})();
+
+/* ===== MÉTODO: veia que acende ===== */
+(function(){
+  const box=document.getElementById('veia'), base=document.getElementById('vbase'), fill=document.getElementById('vfill'), steps=[...box.querySelectorAll('.step')];
+  let len=1;
+  function build(){ const h=box.offsetHeight; let d='M40 0'; const seg=Math.max(4,Math.round(h/160)); for(let i=1;i<=seg;i++){ const y=h*i/seg, y0=h*(i-1)/seg, sx=i%2?10:70; d+=` C ${sx} ${y0+(y-y0)*.35}, ${sx} ${y0+(y-y0)*.65}, 40 ${y}`; } base.setAttribute('d',d); fill.setAttribute('d',d); len=fill.getTotalLength(); fill.style.strokeDasharray=len; upd(); }
+  function upd(){ const r=box.getBoundingClientRect(), vh=innerHeight; const p=Math.min(1,Math.max(0,(vh*.62-r.top)/r.height)); fill.style.strokeDashoffset=len*(1-p);
+    steps.forEach(s=>{ const t=s.getBoundingClientRect().top; s.classList.toggle('on', t<vh*.62); }); }
+  build(); addEventListener('resize',build); addEventListener('scroll',upd,{passive:true}); if(document.fonts) document.fonts.ready.then(build);
+})();
+
+/* ===== INDÚSTRIAS ===== */
+(function(){
+  const S={
+    "Química":["Quem compra: outras indústrias, formuladores e revendas técnicas, com decisão ligada a especificação e confiança no fornecedor.","Como vende: representante técnico e distribuidor por região, ciclo mais longo, com amostra e homologação.","Onde trava: a marca não é conhecida fora da carteira atual e o representante começa a conversa do zero."],
+    "Alimentícia":["Quem compra: atacado, distribuidores, redes e food service, cada um com lógica de compra própria.","Como vende: representantes por região e distribuidores, com disputa constante por espaço na prateleira.","Onde trava: baixa demanda local e concorrência por espaço, as objeções que o representante mais escuta."],
+    "Construção civil":["Quem compra: construtoras, revendas de materiais e profissionais que prescrevem o produto.","Como vende: revendas e distribuidores por praça, com influência do prescritor na especificação.","Onde trava: a revenda de cada cidade decide sozinha o que empurrar, sem a marca presente na região."],
+    "Mineração":["Quem compra: grandes operações, fornecedores de insumos e empresas de serviços ligadas à cadeia.","Como vende: relacionamento direto e licitações, com poucas contas de peso e decisão em mais de uma área.","Onde trava: mapear quem decide em cada conta e entrar antes de o fornecedor atual renovar."],
+    "Metalurgia":["Quem compra: indústrias de transformação, distribuidores de aço e metal e projetos sob encomenda.","Como vende: cotação, representante e carteira recorrente, com preço e prazo pesando muito.","Onde trava: a venda depende de cotações que chegam, e não de mercado e região escolhidos."],
+    "Tratamento de água":["Quem compra: indústrias com efluente e afluente, frigoríficos, têxteis, papel e alimentos, além de órgãos públicos por licitação.","Como vende: solução sob medida, por representantes no privado e por licitação no público.","Onde trava: site e presença desatualizados para quem pesquisa antes de ligar, e venda constante sem estratégia regional."],
+    "Têxtil":["Quem compra: confecções, atacadistas e outras indústrias da cadeia.","Como vende: representantes e carteira, com forte influência de moda, preço e prazo.","Onde trava: depender de poucas contas e não saber em quais regiões existe procura sem atendimento."],
+    "Papel e celulose":["Quem compra: gráficas, embalagens, distribuidores e outras indústrias, em volume.","Como vende: contratos e distribuidores, com muita atenção a custo logístico por região.","Onde trava: a distância define a venda, então a região certa pesa mais do que o volume total."],
+    "Frigoríficos":["Quem compra: atacado, redes, food service e exportação, cada um com prazo e exigência diferentes.","Como vende: carteira de compradores recorrentes e representantes por praça.","Onde trava: concentração em poucos compradores e pouca visibilidade de onde ainda não se vende."],
+    "Outro ramo":["Quem compra: outras empresas, distribuidores, revendas ou órgãos públicos.","Como vende: por representantes, distribuidores, licitação ou carteira própria.","Onde trava: normalmente na mesma raiz, a venda existe, mas o desenho do comercial não."]
+  };
+  const chips=document.getElementById('chips'), seg=document.getElementById('seg'), h=document.getElementById('segh');
+  const heads=["Quem compra","Como vende","Onde costuma travar"];
+  function pick(k){ state.segment=k==="Outro ramo"?"":k; chips.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.textContent===k));
+    h.textContent = k==="Outro ramo"?"Qualquer indústria que venda para outra empresa tem o mesmo ponto de partida.":"Na indústria "+k.toLowerCase()+", o comercial costuma ter este desenho.";
+    seg.innerHTML=S[k].map((t,i)=>'<div><h4>'+heads[i]+'</h4><p>'+t.split(': ').slice(1).join(': ')+'</p></div>').join(''); refreshWA(); }
+  Object.keys(S).forEach(k=>{ const b=document.createElement('button'); b.textContent=k; b.setAttribute('aria-pressed','false'); b.onclick=()=>pick(k); chips.appendChild(b); });
+  pick("Química");
+})();
+
+/* ===== QUIZ ===== */
+(function(){
+  const Q=[
+    {t:"Como a indústria vende hoje?",f:"estrategia",o:["Carteira antiga e indicação","Representantes, sem regra clara por região","Cadeia definida, com metas por região"]},
+    {t:"Você sabe onde a marca é procurada e ainda não vende?",f:"mercado",o:["Não sei","Tenho uma ideia, sem dado","Sei, com dado de anúncios e vendas"]},
+    {t:"Quem abre porta nova?",f:"prospeccao",o:["Ninguém, o cliente vem sozinho","O representante, quando consegue","Alguém liga com lista qualificada e agenda reunião"]},
+    {t:"Como o marketing é usado hoje?",f:"marketing",o:["Posts e site","Anúncios sem ligação com o comercial","Anúncios por região, guiados pelo comercial"]},
+    {t:"O que acontece com quem pediu proposta?",f:"estrategia",o:["Fica a critério de cada vendedor","Tem follow-up às vezes","Tem processo e próximo passo registrado"]},
+    {t:"Mercado e concorrente: como você acompanha?",f:"mercado",o:["Não acompanho","Olho de vez em quando","Tenho estudo atualizado"]}
+  ];
+  const names={mercado:"inteligência de mercado",estrategia:"estratégia comercial",prospeccao:"prospecção ativa",marketing:"marketing como ferramenta"};
+  const max={mercado:4,estrategia:4,prospeccao:2,marketing:2};
+  const box=document.getElementById('quiz'); let i=0, ans=[];
+  function ask(){
+    const q=Q[i];
+    box.innerHTML='<div class="qprog"><i style="width:'+(i/Q.length*100)+'%"></i></div><div class="q"><p class="mono">Pergunta '+(i+1)+' de '+Q.length+'</p><h3 style="margin-top:12px">'+q.t+'</h3><div class="opts">'+q.o.map((o,k)=>'<button data-k="'+k+'"><em>'+'ABC'[k]+'</em>'+o+'</button>').join('')+'</div></div>';
+    box.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{ ans.push(+b.dataset.k); i++; i<Q.length?ask():done(); });
+    requestAnimationFrame(()=>{ const bar=box.querySelector('.qprog i'); if(bar) bar.style.width=((i+1)/Q.length*100)+'%'; });
+  }
+  function done(){
+    const sc={mercado:0,estrategia:0,prospeccao:0,marketing:0}; let tot=0; ans.forEach((a,k)=>{ sc[Q[k].f]+=a; tot+=a; });
+    const lab = tot<=4?"Comercial por inércia":tot<=8?"Comercial em construção":"Comercial pronto para escalar";
+    const txt = tot<=4?"A venda acontece, mas sem desenho. Carteira, indicação e sorte fazem o trabalho. O primeiro ganho vem de organizar o que já existe.":tot<=8?"Há partes funcionando e partes soltas. O ganho está em ligar canal, região e prospecção na mesma estratégia.":"A base existe. O próximo passo é usar dado por região para decidir onde investir e prospecção ativa para abrir porta nova.";
+    const order=["mercado","estrategia","prospeccao","marketing"]; let weak=order[0], wp=2;
+    order.forEach(k=>{ const p=sc[k]/max[k]; if(p<wp){wp=p;weak=k;} });
+    state.result=lab; state.weak=names[weak]; refreshWA();
+    box.innerHTML='<div class="result"><div class="qprog"><i style="width:100%"></i></div><p class="mono">Seu retrato inicial</p><h3>'+lab+'</h3><p class="lead">'+txt+'</p><div class="bars">'+order.map(k=>'<div class="bar'+(k===weak?' weak':'')+'"><span>'+names[k]+'</span><i><b style="width:0" data-w="'+Math.round(sc[k]/max[k]*100)+'"></b></i></div>').join('')+'</div><p class="lead" style="margin-bottom:28px">Por onde começar: <b class="yel" style="font-weight:600">'+names[weak]+'</b>.</p><a class="btn" href="#cta">Levar este resultado para o bate-papo <span aria-hidden="true">→</span></a><button class="again" id="redo">Refazer</button></div>';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelectorAll('.bar b').forEach(b=>b.style.width=Math.max(4,b.dataset.w)+'%')));
+    document.getElementById('redo').onclick=()=>{i=0;ans=[];state.result="";state.weak="";refreshWA();ask();};
+  }
+  ask();
+})();
+
+/* ===== OBJEÇÕES ===== */
+document.querySelectorAll('#obj button').forEach(b=>{
+  b.onclick=()=>{ const open=b.getAttribute('aria-expanded')==='true', ans=b.nextElementSibling;
+    document.querySelectorAll('#obj button').forEach(x=>{x.setAttribute('aria-expanded','false'); x.nextElementSibling.style.maxHeight=0;});
+    if(!open){ b.setAttribute('aria-expanded','true'); ans.style.maxHeight=ans.scrollHeight+'px'; } };
+});
+
+refreshWA();
+</script>
+</body>
+</html>
